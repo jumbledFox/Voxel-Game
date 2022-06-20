@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\gl">
+      <UniqueIdentifier>{9851e4f1-4ac3-48d1-a169-b08accea5816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl">
+      <UniqueIdentifier>{17ee2fd1-8366-4439-ab66-3438c9d10e0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game">
+      <UniqueIdentifier>{04a27b9f-3ec4-41ba-9980-0781c11cd332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\world">
+      <UniqueIdentifier>{0ed6bba4-82bc-4e84-bc1d-f75757a3edf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{9355b4d7-bb26-49f1-9c68-e981894a5426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\world">
+      <UniqueIdentifier>{e20bcd35-52e2-4127-803e-7b39f29f6ab1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\basic.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\basic.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\gl\shader.hpp">
+      <Filter>Header Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\world\chunk.hpp">
+      <Filter>Header Files\game\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\world\chunk_manager.hpp">
+      <Filter>Header Files\game\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\world\chunk_mesh.hpp">
+      <Filter>Header Files\game\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\world\chunk_mesh_builder.hpp">
+      <Filter>Header Files\game\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\world\coordinate.hpp">
+      <Filter>Header Files\game\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\world\world_constants.hpp">
+      <Filter>Header Files\game\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\keyboard.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\voxel_data.hpp">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\world\chunk.cpp">
+      <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\world\chunk_manager.cpp">
+      <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\world\chunk_mesh.cpp">
+      <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\world\chunk_mesh_builder.cpp">
+      <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\world\coordinate.cpp">
+      <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gl\shader.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gl\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\voxel_data.cpp">
+      <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
