@@ -29,7 +29,12 @@ ChunkMeshCollection ChunkMeshBuilder::makeChunkMesh(const Chunk& chunk, const Vo
 
                 auto voxelData = voxelDataManager.getVoxelData(voxel);
 
-
+                //collection.voxelMesh.addFace(FRONT_FACE,  voxelPosition, voxelData.sTextureId);
+                //collection.voxelMesh.addFace(BACK_FACE,   voxelPosition, voxelData.sTextureId);
+                //collection.voxelMesh.addFace(RIGHT_FACE,  voxelPosition, voxelData.sTextureId);
+                collection.voxelMesh.addFace(LEFT_FACE,   voxelPosition, voxelData.sTextureId);
+                //collection.voxelMesh.addFace(TOP_FACE,    voxelPosition, voxelData.tTextureId);
+                //collection.voxelMesh.addFace(BOTTOM_FACE, voxelPosition, voxelData.bTextureId);
             }
         }
     }

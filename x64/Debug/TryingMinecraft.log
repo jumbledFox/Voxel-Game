@@ -1,5 +1,2 @@
 ﻿  chunk_mesh_builder.cpp
-  main.cpp
-F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\main.cpp(108,66): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Generating Code...
   TryingMinecraft.vcxproj -> F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\TryingMinecraft.exe

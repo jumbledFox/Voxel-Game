@@ -154,6 +154,7 @@
     <ClInclude Include="src\game\world\coordinate.hpp" />
     <ClInclude Include="src\game\world\world_constants.hpp" />
     <ClInclude Include="src\gl\shader.hpp" />
+    <ClInclude Include="src\gl\vertex_array.hpp" />
     <ClInclude Include="src\input\keyboard.hpp" />
     <ClInclude Include="src\window.hpp" />
   </ItemGroup>
@@ -166,6 +167,7 @@
     <ClCompile Include="src\game\world\coordinate.cpp" />
     <ClCompile Include="src\gl\glad.c" />
     <ClCompile Include="src\gl\shader.cpp" />
+    <ClCompile Include="src\gl\vertex_array.cpp" />
     <ClCompile Include="src\input\keyboard.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\window.cpp" />

@@ -71,6 +71,9 @@
     <ClInclude Include="src\game\voxel_data.hpp">
       <Filter>Header Files\game</Filter>
     </ClInclude>
+    <ClInclude Include="src\gl\vertex_array.hpp">
+      <Filter>Header Files\gl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\window.cpp">
@@ -105,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="src\game\voxel_data.cpp">
       <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gl\vertex_array.cpp">
+      <Filter>Source Files\gl</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

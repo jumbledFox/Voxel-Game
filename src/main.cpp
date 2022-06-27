@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "gl/shader.hpp"
+#include "gl/vertex_array.hpp"
 
 #include "window.hpp"
 #include "input/keyboard.hpp"
@@ -21,9 +22,12 @@ int main() {
 
 	gl::Shader shader("shaders/basic.vert", "shaders/basic.frag");
 
-	voxelDataManager.addVoxelData({ "grass",            0, 1, 2,   VoxelMeshStyle::Voxel, VoxelType::Solid });
+	voxelDataManager.addVoxelData({ "grass",           0, 1, 2,    VoxelMeshStyle::Voxel, VoxelType::Solid });
+	voxelDataManager.addVoxelData({ "dirt",            2, 2, 2,    VoxelMeshStyle::Voxel, VoxelType::Solid });
 	voxelDataManager.addVoxelData({ "stone",           3,          VoxelMeshStyle::Voxel, VoxelType::Solid });
 	voxelDataManager.addVoxelData({ "stone_bricks",    4,          VoxelMeshStyle::Voxel, VoxelType::Solid });
+
+	voxelDataManager.addVoxelData({ "water",           7, 7, 7,    VoxelMeshStyle::Voxel ,VoxelType::Liquid });
 
 	voxelDataManager.addVoxelData({ "crate",           5,          VoxelMeshStyle::Voxel, VoxelType::Solid });
 	voxelDataManager.addVoxelData({ "explosive_crate", 6,          VoxelMeshStyle::Voxel, VoxelType::Solid });
@@ -37,6 +41,8 @@ int main() {
 	voxelDataManager.addVoxelData({ "birch_planks",    19,         VoxelMeshStyle::Voxel, VoxelType::Solid });
 
 	voxelDataManager.addVoxelData({ "sand",            12, 12, 12, VoxelMeshStyle::Voxel, VoxelType::Solid });
+	voxelDataManager.addVoxelData({ "sandstone",       13, 13, 13, VoxelMeshStyle::Voxel, VoxelType::Solid });
+	voxelDataManager.addVoxelData({ "cactus",          15, 14, 15, VoxelMeshStyle::Voxel, VoxelType::Solid });
 
 	voxelDataManager.addVoxelData({ "tall_grass",      25,         VoxelMeshStyle::Cross, VoxelType::Flora });
 	voxelDataManager.addVoxelData({ "dead_bush",       24,         VoxelMeshStyle::Cross, VoxelType::Flora });
@@ -48,6 +54,7 @@ int main() {
 	std::cout << (int)voxelDataManager.getIdFromName("tall_grass") << "\n";
 	std::cout << (int)voxelDataManager.getVoxelData(3).id << "\n";
 
+	auto e = voxelDataManager.getVoxelData(0);
 
 	// Testing chunks
 	std::cout << chunkManager.m_chunks.size() << "\n";
@@ -73,44 +80,17 @@ int main() {
 		2, 3, 5
 	};
 
+	gl::VertexArray v;
 
-	// -- Testing OpenGL -- //
-	unsigned int VertexBuffer;
-	unsigned int VertexArray;
+	ChunkMeshCollection collection = ChunkMeshBuilder::makeChunkMesh(chunkManager.getChunk({ 0, 0, 0 }), voxelDataManager);
 
-	// Generate Vertex Arrays and Buffers
-	glGenBuffers(1, &VertexBuffer);
-	glGenVertexArrays(1, &VertexArray);
-
-	// Bind them
-	glBindVertexArray(VertexArray);
-	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
-
-	// Get vertices into the buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
-
-	// Tell OpenGL what the vertices represent
-	// Position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	// Lighting
-	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(3 * sizeof(float)));
-
-	// Enable vertexAttribPointer
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-
-	// Element Buffer
-	unsigned int ElementBuffer;
-	glGenBuffers(1, &ElementBuffer);
-	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ElementBuffer);
-
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
-
-
+	v.create();
+	v.addVertexBuffer(collection.voxelMesh.vertices, { {GL_FLOAT, 3, GL_FALSE}, {GL_FLOAT, 1, GL_FALSE} });
+	v.addIndexBuffer(collection.voxelMesh.indices);
 
 	// Loop
 	while (Window::running) {
+
 		// Update the window
 		Window::update();
 
@@ -119,10 +99,8 @@ int main() {
 
 
 		shader.use();
-		glBindVertexArray(VertexArray);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ElementBuffer);
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
+		v.draw(GL_TRIANGLES);
 
 		// Swap buffers
 		glfwSwapBuffers(Window::window);
