@@ -20,21 +20,37 @@ ChunkMeshCollection ChunkMeshBuilder::makeChunkMesh(const Chunk& chunk, const Vo
 
     ChunkMeshCollection collection(chunk.getPosition());
 
+    
+    //collection.voxelMesh.addFace(FRONT_FACE, { 0, 0, 0 }, 0);
+    
+
     for (int y = 0; y < CHUNK_SIZE; y++) {
         for (int z = 0; z < CHUNK_SIZE; z++) {
             for (int x = 0; x < CHUNK_SIZE; x++) {
+
                 VoxelPosition voxelPosition(x, y, z);
 
                 auto voxel = chunk.qGetVoxel(voxelPosition);
 
                 auto voxelData = voxelDataManager.getVoxelData(voxel);
 
-                //collection.voxelMesh.addFace(FRONT_FACE,  voxelPosition, voxelData.sTextureId);
-                //collection.voxelMesh.addFace(BACK_FACE,   voxelPosition, voxelData.sTextureId);
-                //collection.voxelMesh.addFace(RIGHT_FACE,  voxelPosition, voxelData.sTextureId);
-                collection.voxelMesh.addFace(LEFT_FACE,   voxelPosition, voxelData.sTextureId);
-                //collection.voxelMesh.addFace(TOP_FACE,    voxelPosition, voxelData.tTextureId);
-                //collection.voxelMesh.addFace(BOTTOM_FACE, voxelPosition, voxelData.bTextureId);
+                if (voxel != 1) {
+                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y, z + 1 })).meshStyle != VoxelMeshStyle::Voxel)
+                        collection.voxelMesh.addFace(FRONT_FACE, voxelPosition, voxelData.sideTexId);
+                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y, z - 1 })).meshStyle != VoxelMeshStyle::Voxel)
+                        collection.voxelMesh.addFace(BACK_FACE, voxelPosition, voxelData.sideTexId);
+
+                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x + 1, y, z })).meshStyle != VoxelMeshStyle::Voxel)
+                        collection.voxelMesh.addFace(RIGHT_FACE, voxelPosition, voxelData.sideTexId);
+                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x - 1, y, z })).meshStyle != VoxelMeshStyle::Voxel)
+                        collection.voxelMesh.addFace(LEFT_FACE, voxelPosition, voxelData.sideTexId);
+
+                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y + 1, z })).meshStyle != VoxelMeshStyle::Voxel)
+                        collection.voxelMesh.addFace(TOP_FACE, voxelPosition, voxelData.topTexId);
+                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y - 1, z })).meshStyle != VoxelMeshStyle::Voxel)
+                        collection.voxelMesh.addFace(BOTTOM_FACE, voxelPosition, voxelData.bottomTexId);
+                }
+                
             }
         }
     }

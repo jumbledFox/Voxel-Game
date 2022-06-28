@@ -31,14 +31,14 @@ void gl::VertexArray::draw(GLenum drawMode) const {
 }
 
 
-void gl::VertexArray::addVertexBuffer(const std::vector<GLfloat>& vertices, const BufferLayoutList& layoutList){
+void gl::VertexArray::addVertexBuffer(const std::vector<GLuint>& vertices, const BufferLayoutList& layoutList){
 	bind();
 
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLuint), vertices.data(), GL_STATIC_DRAW);
 
 	GLsizei stride = 0;
 	for (const auto& layout : layoutList)

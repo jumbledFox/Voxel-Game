@@ -31,14 +31,9 @@
     <Filter Include="Source Files\game\world">
       <UniqueIdentifier>{e20bcd35-52e2-4127-803e-7b39f29f6ab1}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\basic.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\basic.vert">
-      <Filter>Resource Files</Filter>
-    </None>
+    <Filter Include="Resource Files\shaders">
+      <UniqueIdentifier>{94dbb344-e7f4-4c34-b3e7-553f9acbf92c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gl\shader.hpp">
@@ -72,6 +67,12 @@
       <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\gl\vertex_array.hpp">
+      <Filter>Header Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gl\stb_image.h">
+      <Filter>Header Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gl\texture.hpp">
       <Filter>Header Files\gl</Filter>
     </ClInclude>
   </ItemGroup>
@@ -112,5 +113,16 @@
     <ClCompile Include="src\gl\vertex_array.cpp">
       <Filter>Source Files\gl</Filter>
     </ClCompile>
+    <ClCompile Include="src\gl\texture.cpp">
+      <Filter>Source Files\game\world</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\basic.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="res\shaders\basic.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

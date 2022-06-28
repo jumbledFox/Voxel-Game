@@ -71,7 +71,7 @@ namespace gl {
 		void draw(GLenum drawMode) const;
 
 		// Add a vertex buffer, decode its data
-		void addVertexBuffer(const std::vector<GLfloat>& vertices, const BufferLayoutList& layoutList);
+		void addVertexBuffer(const std::vector<GLuint>& vertices, const BufferLayoutList& layoutList);
 		// Add indices / index buffer
 		void addIndexBuffer(const std::vector<GLuint>& indices);
 

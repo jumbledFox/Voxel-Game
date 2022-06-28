@@ -1,6 +1,7 @@
 #include "window.hpp"
 
 #include "Input/Keyboard.hpp"
+#include "gl/stb_image.h"
 
 GLFWwindow* Window::window;
 bool Window::running = true;
@@ -42,7 +43,8 @@ void Window::loadOpenGL(std::string windowTitle) {
 	// Set glfwSwapInterval
 	glfwSwapInterval(1);
 
-
+	stbi_set_flip_vertically_on_load(true);
+	
 	// Enable transparency
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

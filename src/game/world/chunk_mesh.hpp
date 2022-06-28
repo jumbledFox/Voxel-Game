@@ -5,7 +5,9 @@
 #include <array>
 #include <vector>
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+
+#include "../../gl/vertex_array.hpp"
 
 #include "coordinate.hpp"
 
@@ -19,17 +21,22 @@ struct MeshFace {
 class ChunkMesh {
 public:
 	// Constructor - Allocates vector space
-	ChunkMesh(const ChunkPosition& chunkPosition) : position(chunkPosition) {}
+	ChunkMesh(const ChunkPosition& chunkPosition) : position(chunkPosition) {
+		vertices.reserve(CHUNK_VOLUME * 2);
+		indices.reserve(CHUNK_VOLUME * 2);
+	}
 
 	// Adds a face to the mesh
 	void addFace(const MeshFace& face, const VoxelPosition& voxelPosition, GLuint texture);
 
 
-	std::vector <float> vertices;
+	std::vector <GLuint> vertices;
 	std::vector <GLuint> indices;
 	int indicesCount = 0;
 
 	ChunkPosition position;
+
+	gl::VertexArray vertexArray;
 };
 
 

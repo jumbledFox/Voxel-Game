@@ -142,10 +142,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="shaders\basic.frag" />
-    <None Include="shaders\basic.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="src\game\voxel_data.hpp" />
     <ClInclude Include="src\game\world\chunk.hpp" />
     <ClInclude Include="src\game\world\chunk_manager.hpp" />
@@ -154,6 +150,8 @@
     <ClInclude Include="src\game\world\coordinate.hpp" />
     <ClInclude Include="src\game\world\world_constants.hpp" />
     <ClInclude Include="src\gl\shader.hpp" />
+    <ClInclude Include="src\gl\stb_image.h" />
+    <ClInclude Include="src\gl\texture.hpp" />
     <ClInclude Include="src\gl\vertex_array.hpp" />
     <ClInclude Include="src\input\keyboard.hpp" />
     <ClInclude Include="src\window.hpp" />
@@ -167,10 +165,15 @@
     <ClCompile Include="src\game\world\coordinate.cpp" />
     <ClCompile Include="src\gl\glad.c" />
     <ClCompile Include="src\gl\shader.cpp" />
+    <ClCompile Include="src\gl\texture.cpp" />
     <ClCompile Include="src\gl\vertex_array.cpp" />
     <ClCompile Include="src\input\keyboard.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\basic.frag" />
+    <None Include="res\shaders\basic.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

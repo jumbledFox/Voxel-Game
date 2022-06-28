@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include "world/world_constants.hpp"
 
@@ -34,19 +35,18 @@ struct VoxelData {
 
 	std::string name;
 
-	GLuint tTextureId;
-	GLuint sTextureId;
-	GLuint bTextureId;
+	GLuint topTexId;
+	GLuint sideTexId;
+	GLuint bottomTexId;
 
 	VoxelMeshStyle meshStyle;
 	VoxelType type;
 
-	VoxelData(std::string name, GLuint TIDt, GLuint TIDs, GLuint TIDb, VoxelMeshStyle meshStyle, VoxelType type) :
-		name(name),  tTextureId(TIDt), sTextureId(TIDs), bTextureId(TIDb), meshStyle(meshStyle), type(type) {
-	}
-	VoxelData(std::string name, GLuint TID, VoxelMeshStyle meshStyle, VoxelType type) :
-		name(name), tTextureId(TID), sTextureId(TID), bTextureId(TID), meshStyle(meshStyle), type(type) {
-	}
+	VoxelData(std::string name, VoxelMeshStyle meshStyle, VoxelType type, glm::i8vec3 textureIDs) :
+		name(name), meshStyle(meshStyle), type(type), topTexId(textureIDs.x), sideTexId(textureIDs.y), bottomTexId(textureIDs.z) {}
+
+	VoxelData(std::string name, VoxelMeshStyle meshStyle, VoxelType type, GLuint textureID) :
+		name(name), meshStyle(meshStyle), type(type), topTexId(textureID), sideTexId(textureID), bottomTexId(textureID) {}
 };
 
 class VoxelDataManager {
@@ -55,6 +55,8 @@ public:
 
 	// Adds a voxel to the data manager
 	void addVoxelData(const VoxelData& voxel);
+	// Adds a vector of voxels to the data manager
+	void addVoxelsData(const std::vector<VoxelData>& voxels);
 
 	// Gets a voxel from its ID
 	VoxelData getVoxelData(const voxel_t& id) const;

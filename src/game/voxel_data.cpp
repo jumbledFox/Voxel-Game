@@ -2,10 +2,7 @@
 
 VoxelDataManager::VoxelDataManager() {
 	VoxelData errorVoxel(
-		"error",
-		63, 63, 63,
-		VoxelMeshStyle::Error,
-		VoxelType::Error
+		"error", VoxelMeshStyle::Error, VoxelType::Error, 63
 	);
 
 	addVoxelData(errorVoxel);
@@ -23,6 +20,14 @@ void VoxelDataManager::addVoxelData(const VoxelData& voxel) {
 	// Add the voxel name and ID to nameIDs
 	nameIDs.insert({ voxel.name, lastElement });
 }
+
+void VoxelDataManager::addVoxelsData(const std::vector<VoxelData>& voxels) {
+	// For every voxel in the vector...
+	for (const auto& v : voxels)
+		// Add it!
+		addVoxelData(v);
+}
+
 
 VoxelData VoxelDataManager::getVoxelData(const voxel_t& id) const {
 	// If the ID is in range

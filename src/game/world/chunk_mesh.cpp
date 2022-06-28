@@ -1,5 +1,7 @@
 #include "chunk_mesh.hpp"
 
+#include <iostream>
+
 void ChunkMesh::addFace(const MeshFace& face, const VoxelPosition& voxelPosition, GLuint texture) {
 	int index = 0;
 
@@ -8,12 +10,15 @@ void ChunkMesh::addFace(const MeshFace& face, const VoxelPosition& voxelPosition
 		GLubyte y = face.vertices[index++] + voxelPosition.y;
 		GLubyte z = face.vertices[index++] + voxelPosition.z;
 
-		vertices.push_back(x);
-		vertices.push_back(y);
-		vertices.push_back(z);
-		vertices.push_back(face.lightLevel);
-		vertices.push_back(i);
-		vertices.push_back(texture);
+		//std::cout << int(x) << " " << int(y) << " " << int(z) << "\n";
+		// Assemble the vertex - Compress the coordinates, texture Coords, Light value, and texture into 4 bytes
+		GLuint vertex =
+			x | y << 5 | z << 10 | i << 15 | face.lightLevel << 17 | texture << 20;
+		//std::cout << (int)x << " " << (int)y << " " << (int)z << " " << i << " " << (int)face.lightLevel << " " << 1 << "\n";
+		vertices.push_back(vertex);
+		//vertices.push_back(x);
+		//vertices.push_back(y);
+		//vertices.push_back(z);
 	}
 	// First triangle
 	indices.push_back(indicesCount);

@@ -1,7 +1,14 @@
 #include <iostream>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "gl/shader.hpp"
 #include "gl/vertex_array.hpp"
+#include "gl/texture.hpp"
 
 #include "window.hpp"
 #include "input/keyboard.hpp"
@@ -16,36 +23,39 @@ ChunkManager chunkManager;
 
 VoxelDataManager voxelDataManager;
 
+// TODO : Add destructors + tidy
 
 int main() {
 	Window::loadOpenGL("Window");
 
-	gl::Shader shader("shaders/basic.vert", "shaders/basic.frag");
+	gl::Shader shader("res/shaders/basic.vert", "res/shaders/basic.frag");
 
-	voxelDataManager.addVoxelData({ "grass",           0, 1, 2,    VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "dirt",            2, 2, 2,    VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "stone",           3,          VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "stone_bricks",    4,          VoxelMeshStyle::Voxel, VoxelType::Solid });
+	std::vector<VoxelData> defaultVoxelData = {
+		{ "air",             VoxelMeshStyle::None,  VoxelType::Gas,    63 },
+		{ "grass",           VoxelMeshStyle::Voxel, VoxelType::Solid,  { 0, 1, 2 } },
+		{ "dirt",            VoxelMeshStyle::Voxel, VoxelType::Solid,  { 2, 2, 2 } },
+		{ "stone",           VoxelMeshStyle::Voxel, VoxelType::Solid,  3 },
+		{ "stone_bricks",    VoxelMeshStyle::Voxel, VoxelType::Solid,  4 },
+		{ "sand",            VoxelMeshStyle::Voxel, VoxelType::Solid,  12 },
+		{ "sandstone",       VoxelMeshStyle::Voxel, VoxelType::Solid,  13 },
+		{ "water",           VoxelMeshStyle::Voxel, VoxelType::Liquid, 7 },
 
-	voxelDataManager.addVoxelData({ "water",           7, 7, 7,    VoxelMeshStyle::Voxel ,VoxelType::Liquid });
+		{ "crate",           VoxelMeshStyle::Voxel, VoxelType::Solid,  5 },
+		{ "explosive_crate", VoxelMeshStyle::Voxel, VoxelType::Solid,  6 },
 
-	voxelDataManager.addVoxelData({ "crate",           5,          VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "explosive_crate", 6,          VoxelMeshStyle::Voxel, VoxelType::Solid });
+		{ "oak_log",         VoxelMeshStyle::Voxel, VoxelType::Solid,  { 9, 8, 9 } },
+		{ "oak_leaves",      VoxelMeshStyle::Voxel, VoxelType::Solid,  10 },
+		{ "oak_planks",      VoxelMeshStyle::Voxel, VoxelType::Solid,  11 },
+		{ "birch_log",       VoxelMeshStyle::Voxel, VoxelType::Solid,  { 17, 16, 17 } },
+		{ "birch_leaves",    VoxelMeshStyle::Voxel, VoxelType::Solid,  18 },
+		{ "birch_planks",    VoxelMeshStyle::Voxel, VoxelType::Solid,  19 },
 
-	voxelDataManager.addVoxelData({ "oak_log",         9, 8, 9,    VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "oak_leaves",      10,         VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "oak_planks",      11,         VoxelMeshStyle::Voxel, VoxelType::Solid });
+		{ "cactus",          VoxelMeshStyle::Voxel, VoxelType::Solid,  { 15, 14, 15 } },
+		{ "tall_grass",      VoxelMeshStyle::Cross, VoxelType::Flora,  25 },
+		{ "dead_bush",       VoxelMeshStyle::Cross, VoxelType::Flora,  24 }
+	};
 
-	voxelDataManager.addVoxelData({ "birch_log",       17, 16, 17, VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "birch_leaves",    18,         VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "birch_planks",    19,         VoxelMeshStyle::Voxel, VoxelType::Solid });
-
-	voxelDataManager.addVoxelData({ "sand",            12, 12, 12, VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "sandstone",       13, 13, 13, VoxelMeshStyle::Voxel, VoxelType::Solid });
-	voxelDataManager.addVoxelData({ "cactus",          15, 14, 15, VoxelMeshStyle::Voxel, VoxelType::Solid });
-
-	voxelDataManager.addVoxelData({ "tall_grass",      25,         VoxelMeshStyle::Cross, VoxelType::Flora });
-	voxelDataManager.addVoxelData({ "dead_bush",       24,         VoxelMeshStyle::Cross, VoxelType::Flora });
+	voxelDataManager.addVoxelsData(defaultVoxelData);
 
 	std::cout << voxelDataManager.getVoxelData(1).name << "\n";
 	std::cout << voxelDataManager.getVoxelData(2).name << "\n";
@@ -58,38 +68,79 @@ int main() {
 
 	// Testing chunks
 	std::cout << chunkManager.m_chunks.size() << "\n";
-	chunkManager.addChunk({ 0, 0, 0 });
 	std::cout << chunkManager.m_chunks.size() << "\n";
 	std::cout << chunkManager.getChunk({0, 0, 0}).voxels[0] << "\n";
 
+	std::vector<ChunkMesh> meshes;
+	meshes.reserve(7 * 3 * 7);
 
-	std::vector<float> vertices = {
-		// Pos               // Light
-		-0.5f, -0.5f, 0.0f,  1.0f,
-		 0.5f, -0.5f, 0.0f,  0.0f,
-		-0.4f,  0.5f, 0.0f,  1.0f,
-		 0.4f,  0.5f, 0.0f,  0.0f,
-		-1.0f, -1.0f, 0.0f,  0.6f,
-		 1.0f,  1.0f, 0.0f,  0.2f
-	};
+	for (int x = 0; x < 7; x++) {
+		for (int y = 0; y < 3; y++) {
+			for (int z = 0; z < 7; z++) {
+				chunkManager.addChunk({ x, y, z });
+			}
+		}
+	}
+	for (int x = 0; x < 7; x++) {
+		for (int y = 0; y < 3; y++) {
+			for (int z = 0; z < 7; z++) {
+				ChunkMesh voxelMesh = ChunkMeshBuilder::makeChunkMesh(chunkManager.getChunk({ x, y, z }), voxelDataManager).voxelMesh;
 
-	std::vector<unsigned int> indices = {
-		0, 1, 2,
-		1, 2, 3,
-		1, 2, 4,
-		2, 3, 5
-	};
+				voxelMesh.vertexArray = gl::VertexArray();
+				voxelMesh.vertexArray.addVertexBuffer(voxelMesh.vertices, { {GL_FLOAT, 1, GL_FALSE} });
+				voxelMesh.vertexArray.addIndexBuffer(voxelMesh.indices);
 
-	gl::VertexArray v;
 
-	ChunkMeshCollection collection = ChunkMeshBuilder::makeChunkMesh(chunkManager.getChunk({ 0, 0, 0 }), voxelDataManager);
+				meshes.push_back(voxelMesh);
+			}
+		}
+	}
 
-	v.create();
-	v.addVertexBuffer(collection.voxelMesh.vertices, { {GL_FLOAT, 3, GL_FALSE}, {GL_FLOAT, 1, GL_FALSE} });
-	v.addIndexBuffer(collection.voxelMesh.indices);
 
+	gl::Texture texture("res/textureatlas.png", GL_RGBA);
+
+
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glEnable(GL_CULL_FACE);
+
+
+	glm::mat4 proj = glm::perspective(glm::radians(35.0f), 1.f/.9f, 0.1f, 100.0f);
+
+	glm::vec3 camPos = { 0, 0, 0 };
+
+	float rot = 90;
 	// Loop
 	while (Window::running) {
+
+
+
+		if (Keyboard::keyHeld(GLFW_KEY_W))
+			camPos.x -= 1;
+		if (Keyboard::keyHeld(GLFW_KEY_S))
+			camPos.x += 1;
+		if (Keyboard::keyHeld(GLFW_KEY_A))
+			camPos.z += 1;
+		if (Keyboard::keyHeld(GLFW_KEY_D))
+			camPos.z -= 1;
+		if (Keyboard::keyHeld(GLFW_KEY_SPACE))
+			camPos.y -= 1;
+		if (Keyboard::keyHeld(GLFW_KEY_LEFT_SHIFT))
+			camPos.y += 1;
+
+
+		if (Keyboard::keyHeld(GLFW_KEY_E))
+			rot += 0.5f;
+		if (Keyboard::keyHeld(GLFW_KEY_Q))
+			rot -= 0.5f;
+
+		std::cout << camPos.x << camPos.y << camPos.z << "\n";
+
+		glm::mat4 vi{ 1.0f };
+		vi = glm::rotate(vi, glm::radians(30.0f), { -1, 0, 0 });
+		vi = glm::rotate(vi, glm::radians(rot), { 0, 1, 0 });
+		vi = glm::translate(vi, camPos);
+		glm::mat4 projview = proj * vi;
+
 
 		// Update the window
 		Window::update();
@@ -100,7 +151,16 @@ int main() {
 
 		shader.use();
 
-		v.draw(GL_TRIANGLES);
+
+		glUniform3i(shader.getUniform("chunkPosition"), 0, 0, 0);
+		glUniformMatrix4fv(shader.getUniform("projectionViewMatrix"), 1, GL_FALSE, glm::value_ptr(projview));
+
+
+		for (const auto& mesh : meshes) {
+			glUniform3i(shader.getUniform("chunkPosition"), mesh.position.x, mesh.position.y, mesh.position.z);
+			mesh.vertexArray.draw(GL_TRIANGLES);
+		}
+		
 
 		// Swap buffers
 		glfwSwapBuffers(Window::window);

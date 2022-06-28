@@ -15,7 +15,31 @@ Chunk::Chunk(ChunkManager& manager, const ChunkPosition position):
 	mp_manager(manager),
 	m_position(position)
 {
-	voxels.fill( (position.y > 2) ? 0 : 1);
+	//voxels.fill( (position.y > 99) ? 1 : 2);
+	voxels.fill(2);
+	voxels[0] = 0;
+	voxels[1] = 1;
+	voxels[2] = 2;
+	voxels[3] = 3;
+	voxels[4] = 4;
+	voxels[5] = 5;
+	voxels[6] = 6;
+	voxels[7] = 7;
+	voxels[8] = 8;
+	/*
+	for (int x = 4; x < 10; x++) {
+		for (int y = 4; y < 10; y++) {
+			for (int z = 4; z < 10; z++) {
+				voxels[toLocalVoxelIndex({ x, y, z })] = 1;
+			}
+		}
+	}
+
+	for (int x = 2; x < 14; x++) {
+		for (int z = 3; z < 10; z++) {
+			voxels[toLocalVoxelIndex({ x, 15, z })] = 1;
+		}
+	}*/
 }
 
 
