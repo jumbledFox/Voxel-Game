@@ -40,11 +40,13 @@ void Player::look() {
 		// Make yaw fit into 0 - 360
 		entity.rotation.y = fmod(entity.rotation.y + 360.0f, 360);
 
+		// TODO - MAKE THIS WORK!!!! https://learnopengl.com/Getting-started/Camera
+		// Maybe just make moving the camera work..
 		glm::vec3 direction;
 		direction.x = cos(glm::radians(entity.rotation.y)) * cos(glm::radians(entity.rotation.x));
 		direction.y = sin(glm::radians(entity.rotation.x));
 		direction.z = sin(glm::radians(entity.rotation.y)) * cos(glm::radians(entity.rotation.x));
-		front = -glm::normalize(direction);
+		front = -glm::normalize(direction); // ????
 	}
 }
 
