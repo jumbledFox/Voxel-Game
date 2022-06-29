@@ -15,7 +15,9 @@ Chunk& ChunkManager::addChunk(const ChunkPosition position) {
 Chunk& ChunkManager::getChunk(const ChunkPosition position) {
 	auto itr = m_chunks.find(position);
 	if (itr == m_chunks.cend()) {
-		Chunk errorChunk(*this, { 0, 0, 0 });
+		static Chunk e(*this, position);
+		e.setPosition_OnlyUseThisWhenMovingTheErrorChunksPosition(position);
+		Chunk& errorChunk = e;
 		return errorChunk;
 	}
 	return itr->second;

@@ -32,6 +32,9 @@ public:
 	// Gets the chunks position
 	ChunkPosition getPosition() const;
 
+	// DO NOT EVER USE THIS
+	void setPosition_OnlyUseThisWhenMovingTheErrorChunksPosition(ChunkPosition pos) { m_position = pos; }
+
 	VoxelArray voxels{ 0 };
 private:
 	ChunkManager& mp_manager;

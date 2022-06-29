@@ -26,20 +26,17 @@ Chunk::Chunk(ChunkManager& manager, const ChunkPosition position):
 	voxels[6] = 6;
 	voxels[7] = 7;
 	voxels[8] = 8;
-	/*
-	for (int x = 4; x < 10; x++) {
-		for (int y = 4; y < 10; y++) {
-			for (int z = 4; z < 10; z++) {
-				voxels[toLocalVoxelIndex({ x, y, z })] = 1;
-			}
-		}
-	}
-
-	for (int x = 2; x < 14; x++) {
-		for (int z = 3; z < 10; z++) {
-			voxels[toLocalVoxelIndex({ x, 15, z })] = 1;
-		}
-	}*/
+	voxels[9] = 9;
+	voxels[10] = 10;
+	voxels[11] = 11;
+	voxels[12] = 12;
+	voxels[13] = 13;
+	voxels[14] = 14;
+	voxels[15] = 15;
+	voxels[16] = 16;
+	voxels[17] = 17;
+	voxels[18] = 18;
+	voxels[19] = 19;
 }
 
 

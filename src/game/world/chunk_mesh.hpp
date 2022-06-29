@@ -29,6 +29,8 @@ public:
 	// Adds a face to the mesh
 	void addFace(const MeshFace& face, const VoxelPosition& voxelPosition, GLuint texture);
 
+	// Update the vertex array
+	void updateVertexArray();
 
 	std::vector <GLuint> vertices;
 	std::vector <GLuint> indices;

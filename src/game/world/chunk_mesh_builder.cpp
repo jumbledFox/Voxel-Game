@@ -1,6 +1,6 @@
 #include "chunk_mesh_builder.hpp"
 
-#include "../voxel_data.hpp"
+#include "voxel_data.hpp"
 
 namespace {
 
@@ -54,6 +54,10 @@ ChunkMeshCollection ChunkMeshBuilder::makeChunkMesh(const Chunk& chunk, const Vo
             }
         }
     }
+
+    collection.voxelMesh.updateVertexArray();
+    collection.floraMesh.updateVertexArray();
+    collection.fluidMesh.updateVertexArray();
 
     return collection;
 }

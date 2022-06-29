@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <glm/glm.hpp>
 
 namespace Window {
 	// This function sets up OpenGL with a window and all that
@@ -30,6 +31,13 @@ namespace Window {
 
 	// Bool showing whether the program is running
 	extern bool running;
+
+	// Vector 2 of the mouse coordinates
+	extern glm::vec2 mousePosition;
+
+	// If the mouse is moving
+	extern bool mouseMoving;
+
 
 	// Get the delta time
 	float getDeltatime();

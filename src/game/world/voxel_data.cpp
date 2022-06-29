@@ -1,5 +1,6 @@
 #include "voxel_data.hpp"
 
+
 VoxelDataManager::VoxelDataManager() {
 	VoxelData errorVoxel(
 		"error", VoxelMeshStyle::Error, VoxelType::Error, 63

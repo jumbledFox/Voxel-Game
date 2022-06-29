@@ -1,13 +1,15 @@
 #version 330 core
 layout (location = 0) in unsigned int inVertexData;
-//layout (location = 0) in vec3 inVertexData;
 
 uniform mat4 projectionViewMatrix;
 
 uniform ivec3 chunkPosition;
 
-out vec3 fTexInfo;
+uniform unsigned int chunkSize;
+
 out float fLighting;
+out vec2 fTexCoords;
+flat out unsigned int fTextureID;
 
 vec2 texCoords[4] = vec2[4](
 	vec2(1, 1),
@@ -36,7 +38,8 @@ void main() {
 	
 	// fTexInfo is a vec3 containing the texture coordinates (the corners) and the index of the texture
 	// texCoords is an array of vec2s that stores each possible corner ( (0, 0), (1, 0), (0, 1), (1, 1) )
-	fTexInfo = vec3(texCoords[index], tex);
+	fTexCoords = texCoords[index];
+	fTextureID = tex;
 	// TODO : Maybe change texture (seen above) to be the precalculated 2d coords of the texture
 	// Maybe I could even use a texture array instead. Who knows?
 	
@@ -48,6 +51,5 @@ void main() {
 	fLighting = float((inVertexData & 0xE0000u) >> 17u) / 5.0;
 
 	
-    gl_Position = projectionViewMatrix * (vec4(x, y, z, 1.0) + vec4(chunkPosition * 16, 1.0));
-    //gl_Position = projectionViewMatrix * (vec4(inVertexData, 1.0) + vec4(chunkPosition * 16, 1.0));
+    gl_Position = projectionViewMatrix * (vec4(x, y, z, 1.0) + vec4(chunkPosition * int(chunkSize), 1.0));
 }

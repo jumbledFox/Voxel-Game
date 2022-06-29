@@ -1,2 +1,7 @@
-﻿  chunk.cpp
+﻿  player.cpp
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\game\player.cpp(41,27): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   TryingMinecraft.vcxproj -> F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\TryingMinecraft.exe

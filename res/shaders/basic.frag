@@ -1,7 +1,8 @@
 #version 330 core
 // Lighting and texture info from vertex shader
 in float fLighting;
-in vec3 fTexInfo;
+in vec2 fTexCoords;
+flat in unsigned int fTextureID;
 
 // Out fragment color
 out vec4 FragColor;
@@ -12,7 +13,7 @@ uniform sampler2D textureAtlas;
 
 void main() {
 	// Coordinate of the texture on the atlas
-	vec2 atlasCoord = vec2(int(fTexInfo.z) % 8, int(fTexInfo.z) / 8);
+	vec2 atlasCoord = vec2((fTextureID % 8u) + fTexCoords.x, 7 - floor(float(fTextureID) / 8.f) + fTexCoords.y);
 
 	// This is a vector that stores the lighting values for multiplication, since i dont want to multiply alpha
 	// It also makes it really easy to add rgb lighting if i want to later
@@ -25,7 +26,7 @@ void main() {
 	// Then divide it by (texture size * amount of textures)
 
 	// Multiplied by the lighting value
-	FragColor = lighting * texture(textureAtlas, (fTexInfo.xy + fTexInfo.z) * 16 / 128);
+	FragColor = lighting * texture(textureAtlas, (atlasCoord) * 16 / 128);
 	
 	// Discard the fragment if it's transparent (No support for semitransparency i think...)
 	if (FragColor.w == 0) { discard; }

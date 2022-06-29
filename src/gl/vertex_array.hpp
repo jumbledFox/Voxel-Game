@@ -35,28 +35,6 @@ namespace gl {
 			bool normalised;
 		};
 
-		class BufferLayout {
-		private:
-			std::vector<BufferElement> m_elements;
-			unsigned int m_stride;
-
-			// Actually add the info to the layout
-			void AddToLayout(unsigned count, unsigned type, unsigned size, bool normalised = false) {
-				m_elements.push_back({ type, count, normalised });
-				m_stride += count * size;
-			}
-		public:
-			// Make adding attributes easy
-			template<typename T>
-			void Push(unsigned int count) { }
-
-			template<> void Push<float>(unsigned int count) { AddToLayout(count, GL_FLOAT, 4, false); }
-			template<> void Push<unsigned>(unsigned int count) { AddToLayout(count, GL_UNSIGNED_INT, 4, false); }
-			template<> void Push<unsigned char>(unsigned int count) { AddToLayout(count, GL_UNSIGNED_BYTE, 1, true); }
-		};
-
-
-
 		VertexArray();
 
 		// Binds the vertex array

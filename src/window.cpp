@@ -5,6 +5,8 @@
 
 GLFWwindow* Window::window;
 bool Window::running = true;
+glm::vec2 Window::mousePosition;
+bool Window::mouseMoving = false;
 
 namespace {
 	float deltaTime = 0.0f;
@@ -37,6 +39,8 @@ void Window::loadOpenGL(std::string windowTitle) {
 
 	// Set cursor position callback
 	glfwSetCursorPosCallback(window, cursorPosCallback);
+	// Make cursor invisible and not leave window
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	// Set keypress callback
 	glfwSetKeyCallback(window, keyCallback);
 
@@ -58,7 +62,8 @@ void Window::loadOpenGL(std::string windowTitle) {
 
 // Cursor Move Callback
 void Window::cursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
-
+	mousePosition = { xpos, ypos };
+	mouseMoving = true;
 }
 
 // Key Callback
@@ -94,6 +99,8 @@ void Window::processInput() {
 void Window::update() {
 	// Process Input
 	processInput();
+
+	mouseMoving = false;
 
 	// Set deltaTime
 	float time = glfwGetTime();

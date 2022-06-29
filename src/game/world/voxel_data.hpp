@@ -8,7 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include "world/world_constants.hpp"
+#include "world_constants.hpp"
 
 // Mesh style for voxels
 enum class VoxelMeshStyle : uint8_t {

@@ -142,33 +142,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\game\voxel_data.hpp" />
+    <ClInclude Include="src\game\entity.hpp" />
+    <ClInclude Include="src\game\player.hpp" />
     <ClInclude Include="src\game\world\chunk.hpp" />
     <ClInclude Include="src\game\world\chunk_manager.hpp" />
     <ClInclude Include="src\game\world\chunk_mesh.hpp" />
     <ClInclude Include="src\game\world\chunk_mesh_builder.hpp" />
     <ClInclude Include="src\game\world\coordinate.hpp" />
+    <ClInclude Include="src\game\world\voxel_data.hpp" />
     <ClInclude Include="src\game\world\world_constants.hpp" />
+    <ClInclude Include="src\gl\camera.hpp" />
     <ClInclude Include="src\gl\shader.hpp" />
     <ClInclude Include="src\gl\stb_image.h" />
     <ClInclude Include="src\gl\texture.hpp" />
     <ClInclude Include="src\gl\vertex_array.hpp" />
     <ClInclude Include="src\input\keyboard.hpp" />
+    <ClInclude Include="src\math.hpp" />
     <ClInclude Include="src\window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\game\voxel_data.cpp" />
+    <ClCompile Include="src\game\entity.cpp" />
+    <ClCompile Include="src\game\player.cpp" />
     <ClCompile Include="src\game\world\chunk.cpp" />
     <ClCompile Include="src\game\world\chunk_manager.cpp" />
     <ClCompile Include="src\game\world\chunk_mesh.cpp" />
     <ClCompile Include="src\game\world\chunk_mesh_builder.cpp" />
     <ClCompile Include="src\game\world\coordinate.cpp" />
+    <ClCompile Include="src\game\world\voxel_data.cpp" />
+    <ClCompile Include="src\gl\camera.cpp" />
     <ClCompile Include="src\gl\glad.c" />
     <ClCompile Include="src\gl\shader.cpp" />
     <ClCompile Include="src\gl\texture.cpp" />
     <ClCompile Include="src\gl\vertex_array.cpp" />
     <ClCompile Include="src\input\keyboard.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\math.cpp" />
     <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <ItemGroup>

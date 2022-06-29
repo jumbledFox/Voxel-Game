@@ -32,6 +32,13 @@ void ChunkMesh::addFace(const MeshFace& face, const VoxelPosition& voxelPosition
 	indicesCount += 4;
 }
 
+void ChunkMesh::updateVertexArray() {
+	vertexArray.destroy();
+	vertexArray.create();
+	
+	vertexArray.addVertexBuffer(vertices, { { GL_FLOAT, 1, GL_FALSE } });
+	vertexArray.addIndexBuffer(indices);
+}
 
 ChunkMeshCollection::ChunkMeshCollection(const ChunkPosition& chunkPosition)
 	: voxelMesh(chunkPosition)
