@@ -81,14 +81,11 @@ void Window::processInput() {
 		Window::running = false;
 	}
 
-	// Example key press
-	if (Keyboard::keyPressed(GLFW_KEY_T)) {
-		std::cout << "T!\n";
-	}
-
-	// Example key hold
-	if (Keyboard::keyHeld(GLFW_KEY_E)) {
-		std::cout << "E!\n";
+	// Wireframe toggle
+	static bool wireframe = false;
+	if (Keyboard::keyPressed(GLFW_KEY_C)) {
+		if (wireframe) { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); wireframe = false; }
+		else { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); wireframe = true; }
 	}
 
 	// Reset pressed

@@ -17,26 +17,9 @@ Chunk::Chunk(ChunkManager& manager, const ChunkPosition position):
 {
 	//voxels.fill( (position.y > 99) ? 1 : 2);
 	voxels.fill(2);
-	voxels[0] = 0;
-	voxels[1] = 1;
-	voxels[2] = 2;
-	voxels[3] = 3;
-	voxels[4] = 4;
-	voxels[5] = 5;
-	voxels[6] = 6;
-	voxels[7] = 7;
-	voxels[8] = 8;
-	voxels[9] = 9;
-	voxels[10] = 10;
-	voxels[11] = 11;
-	voxels[12] = 12;
-	voxels[13] = 13;
-	voxels[14] = 14;
-	voxels[15] = 15;
-	voxels[16] = 16;
-	voxels[17] = 17;
-	voxels[18] = 18;
-	voxels[19] = 19;
+
+	for (int i = 0; i < 21; i++)
+		voxels[(CHUNK_VOLUME - CHUNK_AREA) + i] = i;
 }
 
 
@@ -47,6 +30,8 @@ voxel_t Chunk::qGetVoxel(const VoxelPosition& voxelPosition) const {
 }
 
 void Chunk::qSetVoxel(const VoxelPosition& voxelPosition, voxel_t voxel) {
+	assert(!voxelPositionOutOfBounds(voxelPosition));
+	voxels[toLocalVoxelIndex(voxelPosition)] = voxel;
 }
 
 voxel_t Chunk::getVoxel(const VoxelPosition& voxelPosition) const {

@@ -51,5 +51,5 @@ void main() {
 	fLighting = float((inVertexData & 0xE0000u) >> 17u) / 5.0;
 
 	
-    gl_Position = projectionViewMatrix * (vec4(x, y, z, 1.0) + vec4(chunkPosition * int(chunkSize), 1.0));
+    gl_Position = projectionViewMatrix * (vec4(x, y, z, 0.5)*2 + vec4(chunkPosition * int(chunkSize), 1.0));
 }

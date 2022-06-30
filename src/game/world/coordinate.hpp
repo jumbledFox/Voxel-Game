@@ -36,3 +36,6 @@ ChunkPosition toChunkPosition(const VoxelPosition& position);
 
 // Converts a local voxel position and chunk to a world voxel position
 VoxelPosition toGlobalVoxelPosition(const VoxelPosition& localVoxelPosition, const ChunkPosition& chunkPosition);
+
+// Turns a regular vec3 coordinate into a block position
+VoxelPosition coordinateToVoxel(const glm::vec3 coordinate);

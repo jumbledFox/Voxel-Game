@@ -16,9 +16,6 @@ public:
 	// Movement 
 	void move();
 
-	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 right = glm::normalize(glm::cross(up, entity.rotation));
-	glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
 private:
 
 	// Last mouse position
@@ -29,5 +26,5 @@ private:
 	float m_lookSpeed = 0.12f;
 
 	// Movement speed
-	float m_moveSpeed = 5.0f;
+	float m_moveSpeed = 7.5f;
 };

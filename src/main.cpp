@@ -27,7 +27,7 @@ VoxelDataManager voxelDataManager;
 // TODO : Add destructors + tidy
 
 int main() {
-	Window::loadOpenGL("Window");
+	Window::loadOpenGL("jumbledFox's Super Duper Mega Ultra Voxel Breaker, Placer, and Manipulator V2 Deluxe");
 
 	gl::Shader shader("res/shaders/basic.vert", "res/shaders/basic.frag");
 	gl::Texture texture("res/textureatlas.png", GL_RGBA);
@@ -54,7 +54,9 @@ int main() {
 
 		{ "cactus",          VoxelMeshStyle::Voxel, VoxelType::Solid,  { 15, 14, 15 } },
 		{ "tall_grass",      VoxelMeshStyle::Cross, VoxelType::Flora,  25 },
-		{ "dead_bush",       VoxelMeshStyle::Cross, VoxelType::Flora,  24 }
+		{ "dead_bush",       VoxelMeshStyle::Cross, VoxelType::Flora,  24 },
+
+		{ "blade",           VoxelMeshStyle::Voxel, VoxelType::Solid,  62 }
 	};
 
 	// Add voxels to the Voxel Data Manager
@@ -68,76 +70,57 @@ int main() {
 
 	// Testing chunks
 
-	chunkManager.addChunk({ 0, 0, 0 });
-	//chunkManager.getChunk({ 0, 0, 0 }).voxels.fill(2);
+	Chunk& c = chunkManager.addChunk({ 0, 0, 0 });
+
+	for (int x = 4; x < 12; x++) {
+		for (int z = 4; z < 12; z++) {
+			for (int y = 10; y < 16; y++) {
+				c.qSetVoxel({ x, y, z }, voxelDataManager.getIdFromName("water"));
+			}
+		}
+	}
+
 	ChunkMeshCollection meshCollection = ChunkMeshBuilder::makeChunkMesh(chunkManager.getChunk({0, 0, 0}), voxelDataManager);
 
-
-
-
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_CULL_FACE);
 
 	shader.use();
 	glUniform1ui(shader.getUniform("chunkSize"), CHUNK_SIZE);
 
+	player.entity.position = { 0, 16, 0 };
 
-	glm::vec3 camPos = { -22, 5, 3 };
-
-	float rot = 90;
 	// Loop
 	while (Window::running) {
 
-
-
-		if (Keyboard::keyHeld(GLFW_KEY_W))
-			camPos -= player.front;
-		if (Keyboard::keyHeld(GLFW_KEY_S))
-			camPos += player.front;
-		if (Keyboard::keyHeld(GLFW_KEY_A))
-			camPos.z -= 1;
-		if (Keyboard::keyHeld(GLFW_KEY_D))
-			camPos.z += 1;
-		if (Keyboard::keyHeld(GLFW_KEY_SPACE))
-			camPos.y += 1;
-		if (Keyboard::keyHeld(GLFW_KEY_LEFT_SHIFT))
-			camPos.y -= 1;
-
-
-		if (Keyboard::keyHeld(GLFW_KEY_E))
-			rot += 0.5f;
-		if (Keyboard::keyHeld(GLFW_KEY_Q))
-			rot -= 0.5f;
-
-		//std::cout << camPos.x << " " << camPos.y << " " << camPos.z << "\n";
-
+		// Update the player and camera position
 		player.update();
-		player.entity.position = { 40, -30, -15.5 };
-
-		Entity cam;
-		cam.rotation = player.entity.rotation;
-		//cam.rotation = { 0, 90, 0 };
-		cam.position = camPos;
-		camera.update(cam);
-
+		camera.update(player.entity);
 
 		// Update the window
 		Window::update();
 
+		// Clear the screen
 		glClearColor(26 / 255.0f, 28 / 255.0f, 44 / 255.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		//
+		//std::cout << voxelDataManager.getVoxelData(chunkManager.getVoxel(coordinateToVoxel(player.entity.position - glm::vec3(0, 0.001f, 0)))).name << " - \n";
+		//
 
 
 		shader.use();
 
-
-		glUniform3i(shader.getUniform("chunkPosition"), 0, 0, 0);
+		// Set the projectionView matrix
 		glUniformMatrix4fv(shader.getUniform("projectionViewMatrix"), 1, GL_FALSE, glm::value_ptr(camera.getViewProjection()));
 
-
 		glUniform3i(shader.getUniform("chunkPosition"), meshCollection.voxelMesh.position.x, meshCollection.voxelMesh.position.y, meshCollection.voxelMesh.position.z);
-		meshCollection.voxelMesh.vertexArray.draw(GL_TRIANGLES);
 		
+		meshCollection.voxelMesh.vertexArray.draw(GL_TRIANGLES);
+		meshCollection.fluidMesh.vertexArray.draw(GL_TRIANGLES);
+		glDisable(GL_CULL_FACE);
+		meshCollection.floraMesh.vertexArray.draw(GL_TRIANGLES);
+		glEnable(GL_CULL_FACE);
+
 
 		// Swap buffers
 		glfwSwapBuffers(Window::window);

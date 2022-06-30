@@ -9,7 +9,7 @@ void Camera::updateProjView() {
 }
 
 void Camera::update(const Entity& entity) {
-	m_position = entity.position;
+	m_position = entity.position + entity.headPos;
 	m_rotation = entity.rotation;
 
 	updateProjView();

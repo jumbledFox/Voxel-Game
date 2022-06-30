@@ -12,7 +12,7 @@ public:
 	Chunk& getChunk(const ChunkPosition position);
 
 
-
+	// Gets a voxel at a global position
 	voxel_t getVoxel(const VoxelPosition& voxelPosition) const;
 
 //private:

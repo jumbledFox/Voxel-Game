@@ -39,17 +39,53 @@ void Player::look() {
 
 		// Make yaw fit into 0 - 360
 		entity.rotation.y = fmod(entity.rotation.y + 360.0f, 360);
-
-		// TODO - MAKE THIS WORK!!!! https://learnopengl.com/Getting-started/Camera
-		// Maybe just make moving the camera work..
-		glm::vec3 direction;
-		direction.x = cos(glm::radians(entity.rotation.y)) * cos(glm::radians(entity.rotation.x));
-		direction.y = sin(glm::radians(entity.rotation.x));
-		direction.z = sin(glm::radians(entity.rotation.y)) * cos(glm::radians(entity.rotation.x));
-		front = -glm::normalize(direction); // ????
 	}
 }
 
 void Player::move() {
-	
+	// Movement speed - multiplied by deltatime
+	float speed = m_moveSpeed * Window::getDeltatime();
+
+	// Vector that ends up being added on to the player
+	glm::vec3 mov(0, 0, 0);
+
+	// Variables that make things a lot easier - don't ask me how they work
+	glm::vec2 rads = { glm::radians(entity.rotation.x),      glm::radians(entity.rotation.y) };
+	glm::vec2 rads90 = { glm::radians(entity.rotation.x + 90), glm::radians(entity.rotation.y + 90) };
+
+	// Forward
+	if (Keyboard::keyHeld(GLFW_KEY_W)) {
+		mov.x -= glm::cos(rads90.y) * glm::sin(rads90.x);
+		mov.z -= glm::sin(rads90.y) * glm::sin(rads90.x);
+		mov.y -= glm::sin(rads.x);
+	}
+	// Backward
+	if (Keyboard::keyHeld(GLFW_KEY_S)) {
+		mov.x += glm::cos(rads90.y) * glm::sin(rads90.x);
+		mov.z += glm::sin(rads90.y) * glm::sin(rads90.x);
+		mov.y += glm::sin(rads.x);
+	}
+	// Left
+	if (Keyboard::keyHeld(GLFW_KEY_A)) {
+		mov.x -= glm::cos(rads.y);
+		mov.z -= glm::sin(rads.y);
+	}
+	// Right
+	if (Keyboard::keyHeld(GLFW_KEY_D)) {
+		mov.x += glm::cos(rads.y);
+		mov.z += glm::sin(rads.y);
+	}
+
+	// Up and down
+	if (Keyboard::keyHeld(GLFW_KEY_SPACE))
+		mov.y += 1;
+	if (Keyboard::keyHeld(GLFW_KEY_LEFT_SHIFT))
+		mov.y -= 1;
+
+	if (Keyboard::keyHeld(GLFW_KEY_LEFT_CONTROL))
+		speed *= 2;
+
+	if (mov != glm::vec3(0, 0, 0)) mov = glm::normalize(mov) * speed;
+
+	entity.position += mov;
 }

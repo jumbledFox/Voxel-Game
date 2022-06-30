@@ -32,23 +32,57 @@ ChunkMeshCollection ChunkMeshBuilder::makeChunkMesh(const Chunk& chunk, const Vo
 
                 auto voxel = chunk.qGetVoxel(voxelPosition);
 
-                auto voxelData = voxelDataManager.getVoxelData(voxel);
+                auto voxData = voxelDataManager.getVoxelData(voxel);
 
-                if (voxel != 1) {
-                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y, z + 1 })).meshStyle != VoxelMeshStyle::Voxel)
-                        collection.voxelMesh.addFace(FRONT_FACE, voxelPosition, voxelData.sideTexId);
-                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y, z - 1 })).meshStyle != VoxelMeshStyle::Voxel)
-                        collection.voxelMesh.addFace(BACK_FACE, voxelPosition, voxelData.sideTexId);
+                ChunkMesh* mesh;
 
-                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x + 1, y, z })).meshStyle != VoxelMeshStyle::Voxel)
-                        collection.voxelMesh.addFace(RIGHT_FACE, voxelPosition, voxelData.sideTexId);
-                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x - 1, y, z })).meshStyle != VoxelMeshStyle::Voxel)
-                        collection.voxelMesh.addFace(LEFT_FACE, voxelPosition, voxelData.sideTexId);
+                switch (voxData.type) {
+                default:
+                case VoxelType::Solid:
+                case VoxelType::Error:
+                    mesh = &collection.voxelMesh; break;
+                case VoxelType::Liquid:
+                    mesh = &collection.fluidMesh; break;
+                case VoxelType::Flora:
+                    mesh = &collection.floraMesh; break;
+                case VoxelType::Gas:
+                    mesh = &collection.voxelMesh; break;
 
-                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y + 1, z })).meshStyle != VoxelMeshStyle::Voxel)
-                        collection.voxelMesh.addFace(TOP_FACE, voxelPosition, voxelData.topTexId);
-                    if (voxelDataManager.getVoxelData(chunk.getVoxel({ x, y - 1, z })).meshStyle != VoxelMeshStyle::Voxel)
-                        collection.voxelMesh.addFace(BOTTOM_FACE, voxelPosition, voxelData.bottomTexId);
+                }
+
+                // Lambda that makes checking and adding faces very easy
+                static auto addFace = [&](VoxelPosition lookPos, MeshFace face, unsigned int texId = 0) {
+                    if (voxelDataManager.getVoxelData(chunk.getVoxel(lookPos)).type != voxData.type)
+                        mesh->addFace(face, voxelPosition, (texId == 0) ? voxData.topTexId : (texId == 1) ? voxData.sideTexId : voxData.bottomTexId);
+                };
+                
+                // Every face
+                static MeshFace faces[6] = { FRONT_FACE, BACK_FACE, RIGHT_FACE, LEFT_FACE, TOP_FACE, BOTTOM_FACE };
+
+                switch (voxData.meshStyle) {
+                case VoxelMeshStyle::Error:
+                    // Add errors for every face
+                    for (int i = 0; i < 6; i++)
+                        mesh->addFace(faces[i], voxelPosition, 63);
+                    break;
+
+                case VoxelMeshStyle::Voxel:
+                    //Check all sides of the voxel, and add faces if they can be seen
+                    addFace({ x, y, z + 1 }, FRONT_FACE,  1);
+                    addFace({ x, y, z - 1 }, BACK_FACE,   1);
+                    addFace({ x + 1, y, z }, RIGHT_FACE,  1);
+                    addFace({ x - 1, y, z }, LEFT_FACE,   1);
+                    addFace({ x, y + 1, z }, TOP_FACE);
+                    addFace({ x, y - 1, z }, BOTTOM_FACE, 2);
+                    break;
+
+                case VoxelMeshStyle::Cross:
+                    mesh->addFace(CROSS_FACE_A, voxelPosition, voxData.sideTexId);
+                    mesh->addFace(CROSS_FACE_B, voxelPosition, voxData.sideTexId);
+                    break;
+
+                default:
+                    break;
                 }
                 
             }

@@ -34,3 +34,12 @@ VoxelPosition toGlobalVoxelPosition(const VoxelPosition& localVoxelPosition,
 		chunkPosition.z * CHUNK_SIZE + localVoxelPosition.z
 	};
 }
+
+
+VoxelPosition coordinateToVoxel(const glm::vec3 coordinate) {
+	return {
+		(int)floor(coordinate.x),
+		(int)floor(coordinate.y),
+		(int)floor(coordinate.z)
+	};
+}
