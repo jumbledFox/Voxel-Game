@@ -54,7 +54,9 @@ void Window::loadOpenGL(std::string windowTitle) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Depth
 	glEnable(GL_DEPTH_TEST);
-
+	// Culling
+	glEnable(GL_CULL_FACE);
+	
 
 	// Reset keyboard
 	Keyboard::initialise();

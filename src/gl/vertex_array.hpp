@@ -48,10 +48,37 @@ namespace gl {
 		// Draws the elements
 		void draw(GLenum drawMode) const;
 
-		// Add a vertex buffer, decode its data
-		void addVertexBuffer(const std::vector<GLuint>& vertices, const BufferLayoutList& layoutList);
 		// Add indices / index buffer
 		void addIndexBuffer(const std::vector<GLuint>& indices);
+
+
+		// Add a vertex buffer, decode its data
+		template <typename T>
+		void addVertexBuffer(const std::vector<T>& vertices, const BufferLayoutList& layoutList) {
+			bind();
+
+			GLuint vertexBuffer;
+			glGenBuffers(1, &vertexBuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+
+			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(T), vertices.data(), GL_STATIC_DRAW);
+
+			GLsizei stride = 0;
+			for (const auto& layout : layoutList)
+				stride += layout.count * layout.size(layout.type);
+
+			unsigned c = 0;
+			unsigned lastSize = 0;
+			for (const auto& layout : layoutList) {
+				glVertexAttribPointer(c, layout.count, layout.type, layout.normalised, stride, (void*)(lastSize));
+				glEnableVertexAttribArray(c);
+
+				c++;
+				lastSize += layout.count * layout.size(layout.type);
+			}
+
+			m_bufferObjects.push_back(vertexBuffer);
+		}
 
 	private:
 		std::vector<GLuint> m_bufferObjects;

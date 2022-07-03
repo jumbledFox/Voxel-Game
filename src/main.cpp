@@ -27,6 +27,7 @@ VoxelDataManager voxelDataManager;
 // TODO : Add destructors + tidy
 
 int main() {
+
 	Window::loadOpenGL("jumbledFox's Super Duper Mega Ultra Voxel Breaker, Placer, and Manipulator V2 Deluxe");
 
 	gl::Shader shader("res/shaders/basic.vert", "res/shaders/basic.frag");
@@ -82,7 +83,6 @@ int main() {
 
 	ChunkMeshCollection meshCollection = ChunkMeshBuilder::makeChunkMesh(chunkManager.getChunk({0, 0, 0}), voxelDataManager);
 
-	glEnable(GL_CULL_FACE);
 
 	shader.use();
 	glUniform1ui(shader.getUniform("chunkSize"), CHUNK_SIZE);
@@ -95,6 +95,11 @@ int main() {
 		// Update the player and camera position
 		player.update();
 		camera.update(player.entity);
+
+		if (Keyboard::keyPressed(GLFW_KEY_B)) {
+			c.voxels.fill(voxelDataManager.getIdFromName("blade"));
+			meshCollection = ChunkMeshBuilder::makeChunkMesh(chunkManager.getChunk({ 0, 0, 0 }), voxelDataManager);
+		}
 
 		// Update the window
 		Window::update();
@@ -114,13 +119,14 @@ int main() {
 		glUniformMatrix4fv(shader.getUniform("projectionViewMatrix"), 1, GL_FALSE, glm::value_ptr(camera.getViewProjection()));
 
 		glUniform3i(shader.getUniform("chunkPosition"), meshCollection.voxelMesh.position.x, meshCollection.voxelMesh.position.y, meshCollection.voxelMesh.position.z);
-		
+
 		meshCollection.voxelMesh.vertexArray.draw(GL_TRIANGLES);
 		meshCollection.fluidMesh.vertexArray.draw(GL_TRIANGLES);
 		glDisable(GL_CULL_FACE);
 		meshCollection.floraMesh.vertexArray.draw(GL_TRIANGLES);
 		glEnable(GL_CULL_FACE);
 
+		
 
 		// Swap buffers
 		glfwSwapBuffers(Window::window);
