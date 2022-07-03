@@ -1,17 +1,32 @@
-﻿  main.cpp
-glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(init.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(window.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(context.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(input.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_thread.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_thread.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
-glfw3.lib(osmesa_context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(osmesa_context.obj)' or at 'F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\glfw3.pdb'; linking object as if no debug info
+﻿  entity.cpp
+  player.cpp
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\game\player.cpp(41,27): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  chunk.cpp
+  chunk_manager.cpp
+  chunk_mesh.cpp
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\gl\vertex_array.hpp(73,1): warning C4312: 'type cast': conversion from 'unsigned int' to 'void *' of greater size
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\game\world\chunk_mesh.cpp(35): message : see reference to function template instantiation 'void gl::VertexArray::addVertexBuffer<GLuint>(const std::vector<GLuint,std::allocator<GLuint>> &,const gl::BufferLayoutList &)' being compiled
+  chunk_mesh_builder.cpp
+  coordinate.cpp
+  voxel_data.cpp
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\game\world\voxel_data.cpp(17,46): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+  camera.cpp
+  shader.cpp
+  texture.cpp
+  vertex_array.cpp
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\gl\vertex_array.cpp(20,64): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\gl\vertex_array.cpp(44,33): warning C4267: '=': conversion from 'size_t' to 'GLsizei', possible loss of data
+  keyboard.cpp
+  main.cpp
+  math.cpp
+  window.cpp
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\window.cpp(105,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+F:\Data\Projects\C++OpenGL\NewbieProjects\TryingMinecraft\src\gl\vertex_array.hpp(25): warning C4715: 'gl::BufferLayout::size': not all control paths return a value
+  glad.c
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   TryingMinecraft.vcxproj -> F:\Data\Projects\C++OpenGL\NewbieProjects\x64\Debug\TryingMinecraft.exe
